@@ -11,7 +11,7 @@ const (
 	// native Kubernetes resource
 	K8s
 	// native Meshplay resource
-	MESHERY
+	MESHPLAY
 )
 
 type Component struct {
