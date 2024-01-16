@@ -1,0 +1,123 @@
+{
+  "title": "Upload Application File",
+  "properties": {
+    "name": {
+      "type": "string",
+      "title": "Application Name",
+      "x-rjsf-grid-area": "6",
+      "description": "The name of Application"
+    },
+    "applicationType": {
+      "title": "Application Type",
+      "description": "Choose the type of application you want to upload",
+      "enum": [
+        "Helm Chart",
+        "Kubernetes Manifest",
+        "Docker Compose"
+      ],
+      "default": "Helm Chart",
+      "x-rjsf-grid-area": "6"
+    }
+  },
+  "dependencies": {
+    "applicationType": {
+      "oneOf": [
+        {
+          "properties": {
+            "applicationType": {
+              "const": "Helm Chart"
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "title": "URL",
+              "description": "raw URL of the application file, example: https://raw.github.com/...",
+              "x-rjsf-grid-area": "12"
+            }
+          },
+          "required": [
+            "url"
+          ]
+        },
+        {
+          "properties": {
+            "applicationType": {
+              "const": "Kubernetes Manifest"
+            }
+          },
+          "oneOf": [
+            {
+              "title": "URL Upload",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "title": "URL",
+                  "description": "raw URL of the application file, example: https://raw.github.com/...",
+                  "x-rjsf-grid-area": "12"
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            {
+              "title": "File Upload",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "data-url",
+                  "title": "File Upload",
+                  "description": "Browse the application file from your file system",
+                  "x-rjsf-grid-area": "12"
+                }
+              },
+              "required": [
+                "file"
+              ]
+            }
+          ]
+        },
+        {
+          "properties": {
+            "applicationType": {
+              "const": "Docker Compose"
+            }
+          },
+          "oneOf": [
+            {
+              "title": "URL Upload",
+              "properties": {
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "title": "URL",
+                  "description": "raw URL of the application file, example: https://raw.github.com/...",
+                  "x-rjsf-grid-area": "12"
+                }
+              },
+              "required": [
+                "url"
+              ]
+            },
+            {
+              "title": "File Upload",
+              "properties": {
+                "file": {
+                  "type": "string",
+                  "format": "data-url",
+                  "title": "File Upload",
+                  "description": "Browse the application file from your file system",
+                  "x-rjsf-grid-area": "12"
+                }
+              },
+              "required": [
+                "file"
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
