@@ -70,7 +70,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 		}
 		def.ObjectMeta.Name += ".K8s"
 		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshplay.khulnasoft.com"
-	case MESHERY:
+	case MESHPLAY:
 		def.Spec.Metadata = map[string]string{
 			"@type": "pattern.meshplay.khulnasoft.com/core",
 		}
