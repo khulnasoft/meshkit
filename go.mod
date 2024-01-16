@@ -14,7 +14,7 @@ replace (
 
 require (
 	cuelang.org/go v0.6.0
-	github.com/go-git/go-git/v5 v5.9.0
+	github.com/go-git/go-git/v5 v5.11.0
 	github.com/go-logr/logr v1.3.0
 	github.com/gofrs/uuid v4.4.0+incompatible
 	github.com/google/uuid v1.3.1
@@ -54,7 +54,6 @@ require (
 	github.com/Microsoft/hcsshim v0.11.0 // indirect
 	github.com/OneOfOne/xxhash v1.2.8 // indirect
 	github.com/ProtonMail/go-crypto v0.0.0-20230828082145-3c4c8a2d2371 // indirect
-	github.com/acomagu/bufpipe v1.0.4 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
 	github.com/asaskevich/govalidator v0.0.0-20200428143746-21a406dcc535 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
@@ -172,7 +171,7 @@ require (
 	github.com/sagikazarmark/slog-shim v0.1.0 // indirect
 	github.com/sergi/go-diff v1.1.0 // indirect
 	github.com/shopspring/decimal v1.3.1 // indirect
-	github.com/skeema/knownhosts v1.2.0 // indirect
+	github.com/skeema/knownhosts v1.2.1 // indirect
 	github.com/sourcegraph/conc v0.3.0 // indirect
 	github.com/spf13/afero v1.10.0 // indirect
 	github.com/spf13/cast v1.6.0 // indirect
