@@ -3,11 +3,13 @@ package v1alpha1
 import (
 	"encoding/json"
 	"fmt"
+	"path/filepath"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/khulnasoft/meshkit/database"
 	"github.com/khulnasoft/meshkit/models/meshmodel/core/types"
+	"github.com/khulnasoft/meshkit/utils"
 	"gorm.io/gorm/clause"
 )
 
@@ -26,13 +28,13 @@ const (
 // swagger:response ComponentDefinition
 // use NewComponent function for instantiating
 type ComponentDefinition struct {
-	ID uuid.UUID `json:"-"`
+	ID uuid.UUID `json:"id,omitempty"`
 	TypeMeta
 	DisplayName     string                 `json:"displayName" gorm:"displayName"`
 	Format          ComponentFormat        `json:"format" yaml:"format"`
-	HostName        string                 `json:"hostname"`
-	HostID          uuid.UUID              `json:"hostID"`
-	DisplayHostName string                 `json:"displayhostname"`
+	HostName        string                 `json:"hostname,omitempty"`
+	HostID          uuid.UUID              `json:"hostID,omitempty"`
+	DisplayHostName string                 `json:"displayhostname,omitempty"`
 	Metadata        map[string]interface{} `json:"metadata" yaml:"metadata"`
 	Model           Model                  `json:"model"`
 	Schema          string                 `json:"schema,omitempty" yaml:"schema"`
@@ -40,7 +42,7 @@ type ComponentDefinition struct {
 	UpdatedAt       time.Time              `json:"-"`
 }
 type ComponentDefinitionDB struct {
-	ID      uuid.UUID `json:"-"`
+	ID      uuid.UUID `json:"id"`
 	ModelID uuid.UUID `json:"-" gorm:"index:idx_component_definition_dbs_model_id,column:modelID"`
 	TypeMeta
 	DisplayName string          `json:"displayName" gorm:"displayName"`
@@ -51,7 +53,7 @@ type ComponentDefinitionDB struct {
 	UpdatedAt   time.Time       `json:"-"`
 }
 
-func (c ComponentDefinition) Type() types.CapabilityType {
+func (c ComponentDefinition) Type() types.EntityType {
 	return types.ComponentDefinition
 }
 func (c ComponentDefinition) GetID() uuid.UUID {
@@ -85,9 +87,10 @@ func CreateComponent(db *database.Handler, c ComponentDefinition) (uuid.UUID, uu
 	return c.ID, mid, err
 }
 func GetMeshModelComponents(db *database.Handler, f ComponentFilter) (c []ComponentDefinition, count int64, unique int) {
+
 	type componentDefinitionWithModel struct {
 		ComponentDefinitionDB
-		ModelDB
+		ModelDB //nolint
 		CategoryDB
 	}
 
@@ -219,4 +222,10 @@ func (c *ComponentDefinition) GetComponentDefinitionDB() (cmd ComponentDefinitio
 	cmd.DisplayName = c.DisplayName
 	cmd.Schema = c.Schema
 	return
+}
+
+func (c ComponentDefinition) WriteComponentDefinition(componentDirPath string) error {
+	componentPath := filepath.Join(componentDirPath, c.Kind+".json")
+	err := utils.WriteJSONToFile[ComponentDefinition](componentPath, c)
+	return err
 }

@@ -10,12 +10,12 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/khulnasoft/meshplay-operator/api/v1alpha1"
 	"github.com/khulnasoft/meshkit/utils"
 	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
+	"github.com/khulnasoft/meshplay-operator/api/v1alpha1"
 )
 
-const BrokerPingEndpoint = "8222/connz"
+const BrokerPingEndpoint = "/connz"
 
 type Connections struct {
 	Connections []connection `json:"connections"`
@@ -88,8 +88,8 @@ func applyOperatorHelmChart(chartRepo string, client meshplaykube.Client, meshpl
 	return nil
 }
 
-func ConnectivityTest(clientName, externalIP string) bool {
-	endpoint, err := url.Parse("http://" + externalIP + ":" + BrokerPingEndpoint)
+func ConnectivityTest(clientName, hostPort string) bool {
+	endpoint, err := url.Parse("http://" + hostPort + BrokerPingEndpoint)
 	if err != nil {
 		return false
 	}

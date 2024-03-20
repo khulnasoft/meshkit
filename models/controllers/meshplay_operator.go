@@ -21,8 +21,8 @@ type meshplayOperator struct {
 }
 
 type OperatorDeploymentConfig struct {
-	GetHelmOverrides      func(delete bool) map[string]interface{}
-	HelmChartRepo         string
+	GetHelmOverrides       func(delete bool) map[string]interface{}
+	HelmChartRepo          string
 	MeshplayReleaseVersion string
 }
 
@@ -100,11 +100,19 @@ func (mo *meshplayOperator) GetPublicEndpoint() (string, error) {
 }
 
 func (mo *meshplayOperator) GetVersion() (string, error) {
-	return "", nil
+	deployment, err := mo.client.KubeClient.AppsV1().Deployments("meshplay").Get(context.TODO(), "meshplay-operator", metav1.GetOptions{})
+	if err != nil {
+		return "", err
+	}
+	return getImageVersionOfContainer(deployment.Spec.Template, "manager"), nil
 }
 
 func (mo *meshplayOperator) setStatus(st MeshplayControllerStatus) {
 	mo.mx.Lock()
 	defer mo.mx.Unlock()
 	mo.status = st
+}
+
+func (mo *meshplayOperator) GetEndpointForPort(portName string) (string, error) {
+	return "", nil
 }

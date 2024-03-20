@@ -32,7 +32,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_user_name: l5io
-          commit_user_email: ci@khulnasoft.com
+          commit_user_email: ci@layer5.io
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: '--signoff'
           commit_message: "run error codes utility"
@@ -42,7 +42,7 @@ jobs:
       - name: Checkout meshplay
         uses: actions/checkout@master
         with:
-          repository: 'khulnasoft/meshplay'
+          repository: 'meshplay/meshplay'
           # token with write access to meshplay repository
           token: ${{ secrets.GH_ACCESS_TOKEN }}
           path: 'meshplay'
@@ -54,7 +54,7 @@ jobs:
 
           cd ./meshplay
           git config user.name l5io
-          git config user.email ci@khulnasoft.com
+          git config user.email ci@layer5.io
           if git diff --exit-code --quiet
           then
             echo "No changes to commit"

@@ -26,7 +26,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 	if err != nil {
 		return "", ErrGetResourceIdentifier(err)
 	}
-	definitionRef := strings.ToLower(resourceId) + ".meshplay.khulnasoft.com"
+	definitionRef := strings.ToLower(resourceId) + ".meshplay.layer5.io"
 	apiVersionCueVal, _ := cfg.CrdFilter.VersionExtractor(parsedCrd)
 	apiVersion, err := apiVersionCueVal.String()
 	if err != nil {
@@ -49,7 +49,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 	switch resource {
 	case SERVICE_MESH:
 		def.Spec.Metadata = map[string]string{
-			"@type":         "pattern.meshplay.khulnasoft.com/mesh/workload",
+			"@type":         "pattern.meshplay.io/mesh/workload",
 			"meshVersion":   cfg.MeshVersion,
 			"meshName":      cfg.Name,
 			"k8sAPIVersion": k8sAPIVersion,
@@ -60,19 +60,19 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 			def.ObjectMeta.Name += "." + cfg.Type
 			def.Spec.DefinitionRef.Name += "." + cfg.Type
 		}
-		def.Spec.DefinitionRef.Name += ".meshplay.khulnasoft.com"
+		def.Spec.DefinitionRef.Name += ".meshplay.layer5.io"
 	case K8s:
 		def.Spec.Metadata = map[string]string{
-			"@type":         "pattern.meshplay.khulnasoft.com/k8s",
+			"@type":         "pattern.meshplay.io/k8s",
 			"k8sAPIVersion": k8sAPIVersion,
 			"k8sKind":       resourceId,
 			"version":       cfg.K8sVersion,
 		}
 		def.ObjectMeta.Name += ".K8s"
-		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshplay.khulnasoft.com"
+		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshplay.layer5.io"
 	case MESHPLAY:
 		def.Spec.Metadata = map[string]string{
-			"@type": "pattern.meshplay.khulnasoft.com/core",
+			"@type": "pattern.meshplay.io/core",
 		}
 	}
 	out, err := json.MarshalIndent(def, "", " ")

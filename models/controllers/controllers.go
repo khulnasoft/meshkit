@@ -4,9 +4,9 @@ type MeshplayControllerStatus int
 
 const (
 	Deployed    MeshplayControllerStatus = iota //The controller is deployed(default behavior)
-	Deploying                                  //The controller is being deployed
-	NotDeployed                                //The controller is not deployed yet
-	Undeployed                                 //The controller has been intentionally undeployed. This state is useful to avoid automatic redeployment.
+	Deploying                                   //The controller is being deployed
+	NotDeployed                                 //The controller is not deployed yet
+	Undeployed                                  //The controller has been intentionally undeployed. This state is useful to avoid automatic redeployment.
 	// we don't know since we have not checked yet
 	Enabled
 	Running
@@ -15,7 +15,7 @@ const (
 )
 
 const (
-	MeshSync      = "meshsync"
+	MeshSync       = "meshsync"
 	MeshplayBroker = "meshplay-broker"
 	MeshplayServer = "meshplay-server"
 )
@@ -49,4 +49,5 @@ type IMeshplayController interface {
 	Undeploy() error
 	GetPublicEndpoint() (string, error)
 	GetVersion() (string, error)
+	GetEndpointForPort(portName string) (string, error)
 }

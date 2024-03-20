@@ -24,15 +24,15 @@ import (
 // 2. Entity type
 // 3. Entity
 type MeshModelRegistrantData struct {
-	Host       Host                 `json:"host"`
-	EntityType types.CapabilityType `json:"entityType"`
-	Entity     []byte               `json:"entity"` //This will be type converted to appropriate entity on server based on passed entity type
+	Host       Host             `json:"host"`
+	EntityType types.EntityType `json:"entityType"`
+	Entity     []byte           `json:"entity"` //This will be type converted to appropriate entity on server based on passed entity type
 }
 type Registry struct {
 	ID           uuid.UUID
 	RegistrantID uuid.UUID
 	Entity       uuid.UUID
-	Type         types.CapabilityType
+	Type         types.EntityType
 	CreatedAt    time.Time
 	UpdatedAt    time.Time
 }
@@ -40,7 +40,7 @@ type Registry struct {
 // Entity is referred as any type of schema managed by the registry
 // ComponentDefinitions and PolicyDefinitions are examples of entities
 type Entity interface {
-	Type() types.CapabilityType
+	Type() types.EntityType
 	GetID() uuid.UUID
 }
 
@@ -116,7 +116,8 @@ func (rm *RegistryManager) Cleanup() {
 func (rm *RegistryManager) RegisterEntity(h Host, en Entity) error {
 	switch entity := en.(type) {
 	case v1alpha1.ComponentDefinition:
-		if entity.Schema == "" { //For components with an empty schema, exit quietly
+		isAnnotation, _ := entity.Metadata["isAnnotation"].(bool)
+		if entity.Schema == "" && !isAnnotation { //For components which an empty schema and is not an annotation, exit quietly
 			return nil
 		}
 
@@ -197,6 +198,26 @@ func (rm *RegistryManager) RegisterEntity(h Host, en Entity) error {
 		}
 		return rm.db.Create(&entry).Error
 
+	default:
+		return nil
+	}
+}
+
+// UpdateEntityIgnoreStatus updates the ignore status of an entity based on the provided parameters.
+// By default during models generation ignore is set to false
+func (rm *RegistryManager) UpdateEntityStatus(ID string, status string, entity string) error {
+	// Convert string UUID to google UUID
+	entityID, err := uuid.Parse(ID)
+	if err != nil {
+		return err
+	}
+	switch entity {
+	case "models":
+		err := v1alpha1.UpdateModelsStatus(rm.db, entityID, status)
+		if err != nil {
+			return err
+		}
+		return nil
 	default:
 		return nil
 	}
@@ -362,6 +383,8 @@ func (rm *RegistryManager) GetModels(db *database.Handler, f types.Filter) ([]v1
 			} else {
 				finder = finder.Order(mf.OrderOn)
 			}
+		} else {
+			finder = finder.Order("display_name")
 		}
 
 		finder.Count(&count)
@@ -371,6 +394,9 @@ func (rm *RegistryManager) GetModels(db *database.Handler, f types.Filter) ([]v1
 		}
 		if mf.Offset != 0 {
 			finder = finder.Offset(mf.Offset)
+		}
+		if mf.Status != "" {
+			finder = finder.Where("model_dbs.status = ?", mf.Status)
 		}
 		includeComponents = mf.Components
 		includeRelationships = mf.Relationships
@@ -392,7 +418,7 @@ func (rm *RegistryManager) GetModels(db *database.Handler, f types.Filter) ([]v1
 		if includeComponents {
 			var components []v1alpha1.ComponentDefinitionDB
 			finder := db.Model(&v1alpha1.ComponentDefinitionDB{}).
-				Select("component_definition_dbs.kind, component_definition_dbs.display_name, component_definition_dbs.api_version, component_definition_dbs.metadata").
+				Select("component_definition_dbs.id, component_definition_dbs.kind,component_definition_dbs.display_name, component_definition_dbs.api_version, component_definition_dbs.metadata").
 				Where("component_definition_dbs.model_id = ?", model.ID)
 			if err := finder.Scan(&components).Error; err != nil {
 				fmt.Println(err)

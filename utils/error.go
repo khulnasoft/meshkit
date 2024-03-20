@@ -9,28 +9,37 @@ import (
 )
 
 var (
-	ErrUnmarshalCode                 = "11043"
-	ErrUnmarshalInvalidCode          = "11044"
-	ErrUnmarshalSyntaxCode           = "11045"
-	ErrUnmarshalTypeCode             = "11046"
-	ErrUnmarshalUnsupportedTypeCode  = "11047"
-	ErrUnmarshalUnsupportedValueCode = "11048"
-	ErrMarshalCode                   = "11049"
-	ErrGetBoolCode                   = "11050"
-	ErrInvalidProtocolCode           = "11051"
-	ErrRemoteFileNotFoundCode        = "11052"
-	ErrReadingRemoteFileCode         = "11053"
-	ErrReadingLocalFileCode          = "11054"
-	ErrReadFileCode                  = "11106"
-	ErrGettingLatestReleaseTagCode   = "11055"
+	ErrUnmarshalCode                 = "meshkit-11159"
+	ErrUnmarshalInvalidCode          = "meshkit-11160"
+	ErrUnmarshalSyntaxCode           = "meshkit-11161"
+	ErrUnmarshalTypeCode             = "meshkit-11162"
+	ErrUnmarshalUnsupportedTypeCode  = "meshkit-11163"
+	ErrUnmarshalUnsupportedValueCode = "meshkit-11164"
+	ErrMarshalCode                   = "meshkit-11165"
+	ErrGetBoolCode                   = "meshkit-11166"
+	ErrInvalidProtocolCode           = "meshkit-11167"
+	ErrRemoteFileNotFoundCode        = "meshkit-11168"
+	ErrReadingRemoteFileCode         = "meshkit-11169"
+	ErrReadingLocalFileCode          = "meshkit-11170"
+	ErrReadFileCode                  = "meshkit-11171"
+	ErrWriteFileCode                 = "meshkit-11172"
+	ErrGettingLatestReleaseTagCode   = "meshkit-11173"
 	ErrInvalidProtocol               = errors.New(ErrInvalidProtocolCode, errors.Alert, []string{"invalid protocol: only http, https and file are valid protocols"}, []string{}, []string{"Network protocol is incorrect"}, []string{"Make sure to specify the right network protocol"})
-	ErrMissingFieldCode              = "11076"
-	ErrExpectedTypeMismatchCode      = "11079"
-	ErrJsonToCueCode                 = "11085"
-	ErrYamlToCueCode                 = "11086"
-	ErrJsonSchemaToCueCode           = "11087"
-	ErrCueLookupCode                 = "11089"
-	ErrTypeCastCode                  = "11100"
+	ErrMissingFieldCode              = "meshkit-11174"
+	ErrExpectedTypeMismatchCode      = "meshkit-11175"
+	ErrJsonToCueCode                 = "meshkit-11176"
+	ErrYamlToCueCode                 = "meshkit-11177"
+	ErrJsonSchemaToCueCode           = "meshkit-11178"
+	ErrCueLookupCode                 = "meshkit-11179"
+	ErrTypeCastCode                  = "meshkit-11180"
+	ErrCreateFileCode                = "meshkit-11181"
+	ErrCreateDirCode                 = "meshkit-11182"
+	// ErrDecodeYamlCode represents the error which is generated when yaml
+	// decode process fails
+	ErrDecodeYamlCode   = "meshkit-11183"
+	ErrExtractTarXZCode = "meshkit-11184"
+	ErrExtractZipCode   = "meshkit-11185"
+	ErrReadDirCode      = "meshkit-11186"
 )
 
 func ErrCueLookup(err error) error {
@@ -105,6 +114,18 @@ func ErrReadFile(err error, filepath string) error {
 	return errors.New(ErrReadFileCode, errors.Alert, []string{"error reading file"}, []string{err.Error()}, []string{fmt.Sprintf("File does not exist in the location %s", filepath), "Insufficient permissions"}, []string{"Verify that file exist at the provided location", "Verify sufficient file permissions."})
 }
 
+func ErrWriteFile(err error, filepath string) error {
+	return errors.New(ErrWriteFileCode, errors.Alert, []string{"error writing file"}, []string{err.Error()}, []string{fmt.Sprintf("File does not exist in the location %s", filepath), "Insufficient write permissions"}, []string{"Verify that file exist at the provided location", "Verify sufficient file permissions."})
+}
+
+func ErrCreateFile(err error, filepath string) error {
+	return errors.New(ErrCreateFileCode, errors.Alert, []string{fmt.Sprintf("error creating file at %s", filepath)}, []string{err.Error()}, []string{"invalid path provided", "insufficient permissions"}, []string{"provide a valid path", "retry by using an absolute path", "check for sufficient permissions for the user"})
+}
+
+func ErrCreateDir(err error, filepath string) error {
+	return errors.New(ErrCreateDirCode, errors.Alert, []string{fmt.Sprintf("error creating directory at %s", filepath)}, []string{err.Error()}, []string{"invalid path provided", "insufficient permissions"}, []string{"provide a valid path", "retry by using an absolute path", "check for sufficient permissions for the user"})
+}
+
 func ErrGettingLatestReleaseTag(err error) error {
 	return errors.New(
 		ErrGettingLatestReleaseTagCode,
@@ -116,6 +137,25 @@ func ErrGettingLatestReleaseTag(err error) error {
 	)
 }
 
-func ErrTypeCast(valType string) error {
-	return errors.New(ErrTypeCastCode, errors.Alert, []string{"invaid type assertion requested"}, []string{fmt.Sprintf("The underlying type of the interface is %s", valType)}, []string{"The interface type is not compatible with the request type cast"}, []string{"use correct data type for type casting"})
+func ErrTypeCast(err error) error {
+	return errors.New(ErrTypeCastCode, errors.Alert, []string{"invaid type assertion requested"}, []string{err.Error()}, []string{"The interface type is not compatible with the request type cast"}, []string{"use correct data type for type casting"})
+}
+
+// ErrDecodeYaml is the error when the yaml unmarshal fails
+func ErrDecodeYaml(err error) error {
+	return errors.New(ErrDecodeYamlCode, errors.Alert, []string{"Error occurred while decoding YAML"}, []string{err.Error()}, []string{}, []string{})
+}
+
+// ErrExtractTarXVZ is the error for unzipping the targz file
+func ErrExtractTarXZ(err error, path string) error {
+	return errors.New(ErrExtractTarXZCode, errors.Alert, []string{fmt.Sprintf("Error while extracting file at %s", path)}, []string{err.Error()}, []string{"The gzip might be corrupt"}, []string{})
+}
+
+// ErrExtractZip is the error for unzipping the zip file
+func ErrExtractZip(err error, path string) error {
+	return errors.New(ErrExtractZipCode, errors.Alert, []string{fmt.Sprintf("Error while extracting file at %s", path)}, []string{err.Error()}, []string{"The zip might be corrupt"}, []string{})
+}
+
+func ErrReadDir(err error, dirPath string) error {
+	return errors.New(ErrReadDirCode, errors.Alert, []string{"error reading directory"}, []string{err.Error()}, []string{fmt.Sprintf("Directory does not exist at the location %s", dirPath), "Insufficient permissions"}, []string{"Verify that directory exist at the provided location", "Verify sufficient directory read permission."})
 }

@@ -1,4 +1,4 @@
-// Copyright 2021 Khulnasoft, Inc.
+// Copyright 2021 Layer5, Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -19,9 +19,9 @@ import (
 )
 
 var (
-	ErrEmptyConfigCode = "11055"
-	ErrViperCode       = "11056"
-	ErrInMemCode       = "11057"
+	ErrEmptyConfigCode = "meshkit-11123"
+	ErrViperCode       = "meshkit-11124"
+	ErrInMemCode       = "meshkit-11125"
 
 	// ErrEmptyConfig is returned when the config has not been initialized.
 	ErrEmptyConfig = errors.New(ErrEmptyConfigCode, errors.Alert, []string{"Config not initialized"}, []string{}, []string{"Viper is crashing"}, []string{"Make sure viper is configured properly"})

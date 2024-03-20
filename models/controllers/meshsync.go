@@ -2,11 +2,9 @@ package controllers
 
 import (
 	"context"
-	"strings"
 
-	// opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
-	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
 	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
+	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
 	v1 "k8s.io/api/core/v1"
 	kubeerror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -51,12 +49,12 @@ func (ms *meshsync) GetStatus() MeshplayControllerStatus {
 			case v1.PodRunning:
 				ms.status = Running
 				broker := NewMeshplayBrokerHandler(ms.kclient)
-				brokerEndpoint, errOfEndpoint := broker.GetPublicEndpoint()
-				if errOfEndpoint != nil {
+				var brokerEndpoint string
+				brokerEndpoint, err = broker.GetEndpointForPort(brokerMonitoringPortName)
+				if err != nil {
 					return ms.status
 				}
-				hostIP := strings.Split(brokerEndpoint, ":")[0]
-				isConnected := ConnectivityTest(MeshSync, hostIP)
+				isConnected := ConnectivityTest(MeshSync, brokerEndpoint)
 				if isConnected {
 					ms.status = Connected
 				}
@@ -115,5 +113,20 @@ func (ms *meshsync) GetPublicEndpoint() (string, error) {
 }
 
 func (ms *meshsync) GetVersion() (string, error) {
+	meshsyncclient, err := opClient.New(&ms.kclient.RestConfig)
+	if err != nil {
+		return "", err
+	}
+
+	meshsyncresource, err := meshsyncclient.CoreV1Alpha1().MeshSyncs("meshplay").Get(context.TODO(), "meshplay-meshsync", metav1.GetOptions{})
+
+	if err != nil {
+		return "", err
+	}
+
+	return meshsyncresource.Spec.Version, nil
+}
+
+func (mb *meshsync) GetEndpointForPort(portName string) (string, error) {
 	return "", nil
 }

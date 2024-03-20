@@ -3,8 +3,8 @@ package walker
 import "github.com/khulnasoft/meshkit/errors"
 
 var (
-	ErrInvalidSizeFileCode = "11072"
-	ErrCloningRepoCode     = "11073"
+	ErrInvalidSizeFileCode = "meshkit-11241"
+	ErrCloningRepoCode     = "meshkit-11242"
 )
 
 func ErrCloningRepo(err error) error {

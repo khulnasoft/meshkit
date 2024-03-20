@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
 	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
+	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
 	v1 "k8s.io/api/core/v1"
 	kubeerror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -14,11 +14,14 @@ import (
 	"k8s.io/kubectl/pkg/polymorphichelpers"
 )
 
+var (
+	brokerMonitoringPortName = "monitor"
+)
+
 type meshplayBroker struct {
 	name    string
 	status  MeshplayControllerStatus
 	kclient *meshplaykube.Client
-	version string
 }
 
 func NewMeshplayBrokerHandler(kubernetesClient *meshplaykube.Client) IMeshplayController {
@@ -26,7 +29,6 @@ func NewMeshplayBrokerHandler(kubernetesClient *meshplaykube.Client) IMeshplayCo
 		name:    "MeshplayBroker",
 		status:  Unknown,
 		kclient: kubernetesClient,
-		version: "",
 	}
 }
 
@@ -40,13 +42,15 @@ func (mb *meshplayBroker) GetStatus() MeshplayControllerStatus {
 		return Unknown
 	}
 	// TODO: Confirm if the presence of operator is needed to use the operator client sdk
-	broker, err := operatorClient.CoreV1Alpha1().Brokers("meshplay").Get(context.TODO(), "meshplay-broker", metav1.GetOptions{})
+	_, err = operatorClient.CoreV1Alpha1().Brokers("meshplay").Get(context.TODO(), "meshplay-broker", metav1.GetOptions{})
 	if err == nil {
-		brokerEndpoint := broker.Status.Endpoint.External
-		hostIP := strings.Split(brokerEndpoint, ":")[0]
-		if broker.Status.Endpoint.External != "" && ConnectivityTest(MeshplayServer, hostIP) {
-			mb.status = Connected
-			return mb.status
+		var monitoringEndpoint string
+		monitoringEndpoint, err = mb.GetEndpointForPort(brokerMonitoringPortName)
+		if err == nil {
+			if ConnectivityTest(MeshplayServer, monitoringEndpoint) {
+				mb.status = Connected
+				return mb.status
+			}
 		}
 		mb.status = Deployed
 		return mb.status
@@ -112,14 +116,23 @@ func (mb *meshplayBroker) GetPublicEndpoint() (string, error) {
 }
 
 func (mb *meshplayBroker) GetVersion() (string, error) {
-	if len(mb.version) == 0 {
-		statefulSet, err := mb.kclient.KubeClient.AppsV1().StatefulSets("meshplay").Get(context.TODO(), MeshplayBroker, metav1.GetOptions{})
-		if kubeerror.IsNotFound(err) {
-			return "", err
-		}
-		return getImageVersionOfContainer(statefulSet.Spec.Template, "nats"), nil
+	statefulSet, err := mb.kclient.KubeClient.AppsV1().StatefulSets("meshplay").Get(context.TODO(), MeshplayBroker, metav1.GetOptions{})
+	if kubeerror.IsNotFound(err) {
+		return "", err
 	}
-	return mb.version, nil
+	return getImageVersionOfContainer(statefulSet.Spec.Template, "nats"), nil
+}
+
+func (mb *meshplayBroker) GetEndpointForPort(portName string) (string, error) {
+	endpoint, err := meshplaykube.GetServiceEndpoint(context.TODO(), mb.kclient.KubeClient, &meshplaykube.ServiceOptions{
+		Name:         "meshplay-broker",
+		Namespace:    "meshplay",
+		PortSelector: portName,
+	})
+	if err != nil {
+		return "", err
+	}
+	return endpoint.External.String(), nil
 }
 
 func getImageVersionOfContainer(container v1.PodTemplateSpec, containerName string) string {
