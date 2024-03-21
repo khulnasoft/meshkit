@@ -32,7 +32,7 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_user_name: l5io
-          commit_user_email: ci@khulnasoft.io
+          commit_user_email: ci@khulnasoft.com
           commit_author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           commit_options: '--signoff'
           commit_message: "run error codes utility"
@@ -54,7 +54,7 @@ jobs:
 
           cd ./meshery
           git config user.name l5io
-          git config user.email ci@khulnasoft.io
+          git config user.email ci@khulnasoft.com
           if git diff --exit-code --quiet
           then
             echo "No changes to commit"

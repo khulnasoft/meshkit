@@ -26,7 +26,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 	if err != nil {
 		return "", ErrGetResourceIdentifier(err)
 	}
-	definitionRef := strings.ToLower(resourceId) + ".meshery.khulnasoft.io"
+	definitionRef := strings.ToLower(resourceId) + ".meshery.khulnasoft.com"
 	apiVersionCueVal, _ := cfg.CrdFilter.VersionExtractor(parsedCrd)
 	apiVersion, err := apiVersionCueVal.String()
 	if err != nil {
@@ -60,7 +60,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 			def.ObjectMeta.Name += "." + cfg.Type
 			def.Spec.DefinitionRef.Name += "." + cfg.Type
 		}
-		def.Spec.DefinitionRef.Name += ".meshery.khulnasoft.io"
+		def.Spec.DefinitionRef.Name += ".meshery.khulnasoft.com"
 	case K8s:
 		def.Spec.Metadata = map[string]string{
 			"@type":         "pattern.meshery.io/k8s",
@@ -69,7 +69,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 			"version":       cfg.K8sVersion,
 		}
 		def.ObjectMeta.Name += ".K8s"
-		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshery.khulnasoft.io"
+		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshery.khulnasoft.com"
 	case MESHERY:
 		def.Spec.Metadata = map[string]string{
 			"@type": "pattern.meshery.io/core",

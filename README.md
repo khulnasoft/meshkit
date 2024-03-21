@@ -1,5 +1,5 @@
 # MeshKit for Meshery and it's ecosystem
-A toolkit for Meshery's microservices and various individual architectural components to reuse and share common functionality. Learn more: [Introducing MeshKit and the Meshery Adapter Library](https://khulnasoft.io/blog/meshery/introducing-meshkit-and-the-meshery-adapter-library)
+A toolkit for Meshery's microservices and various individual architectural components to reuse and share common functionality. Learn more: [Introducing MeshKit and the Meshery Adapter Library](https://khulnasoft.com/blog/meshery/introducing-meshkit-and-the-meshery-adapter-library)
 
 [![](https://github.com/meshery/meshkit/actions/workflows/ci.yml/badge.svg)](https://github.com/meshery/meshkit/actions/workflows/ci.yml)
 [![](https://github.com/meshery/meshkit/actions/workflows/release-drafter.yml/badge.svg)](https://github.com/meshery/meshkit/actions/workflows/release-drafter.yml)
@@ -10,16 +10,16 @@ A toolkit for Meshery's microservices and various individual architectural compo
 ## Join the community!
 
 <a name="contributing"></a><a name="community"></a>
-Our projects are community-built and welcome collaboration. 👍 Be sure to see the <a href="https://khulnasoft.io/community/newcomers">Layer5 Community Welcome Guide</a> for a tour of resources available to you and jump into our <a href="http://slack.khulnasoft.io">Slack</a>!
+Our projects are community-built and welcome collaboration. 👍 Be sure to see the <a href="https://khulnasoft.com/community/newcomers">Layer5 Community Welcome Guide</a> for a tour of resources available to you and jump into our <a href="http://slack.khulnasoft.com">Slack</a>!
 
 <p style="clear:both;">
-<a href ="https://khulnasoft.io/community/meshmates"><img alt="MeshMates" src=".github/readme/images/Layer5-MeshMentors.png" style="margin-right:10px; margin-bottom:7px;" width="28%" align="left" /></a>
+<a href ="https://khulnasoft.com/community/meshmates"><img alt="MeshMates" src=".github/readme/images/Layer5-MeshMentors.png" style="margin-right:10px; margin-bottom:7px;" width="28%" align="left" /></a>
 <h3>Find your MeshMate</h3>
 
 <p>MeshMates are experienced Layer5 community members, who will help you learn your way around, discover live projects and expand your community network. 
 Become a <b>Meshtee</b> today!</p>
 
-Find out more on the <a href="https://khulnasoft.io/community">Layer5 community</a>. <br />
+Find out more on the <a href="https://khulnasoft.com/community">Layer5 community</a>. <br />
 <br /><br /><br /><br />
 </p>
 
@@ -40,8 +40,8 @@ Find out more on the <a href="https://khulnasoft.io/community">Layer5 community<
 <p>
 ✔️ <em><strong>Join</strong></em> any or all of the weekly meetings on <a href="https://calendar.google.com/calendar/b/1?cid=bGF5ZXI1LmlvX2VoMmFhOWRwZjFnNDBlbHZvYzc2MmpucGhzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">community calendar</a>.<br />
 ✔️ <em><strong>Watch</strong></em> community <a href="https://www.youtube.com/playlist?list=PL3A-A6hPO2IMPPqVjuzgqNU5xwnFFn3n0">meeting recordings</a>.<br />
-✔️ <em><strong>Access</strong></em> the <a href="https://drive.google.com/drive/u/4/folders/0ABH8aabN4WAKUk9PVA">Community Drive</a> by completing a community <a href="https://khulnasoft.io/newcomer">Member Form</a>.<br />
-✔️ <em><strong>Discuss</strong></em> in the <a href="https://discuss.khulnasoft.io">Community Forum</a>.<br />
+✔️ <em><strong>Access</strong></em> the <a href="https://drive.google.com/drive/u/4/folders/0ABH8aabN4WAKUk9PVA">Community Drive</a> by completing a community <a href="https://khulnasoft.com/newcomer">Member Form</a>.<br />
+✔️ <em><strong>Discuss</strong></em> in the <a href="https://discuss.khulnasoft.com">Community Forum</a>.<br />
 </p>
 <p align="center">
 <i>Not sure where to start?</i> Grab an open issue with the <a href="https://github.com/khulnasoft/khulnasoft/labels/help%20wanted">help-wanted label</a>.
