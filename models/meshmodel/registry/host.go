@@ -75,7 +75,7 @@ type IHost interface {
 type ArtifactHub struct{}
 
 func (ah ArtifactHub) HandleDependents(comp v1alpha1.Component, kc *kubernetes.Client, isDeploy bool) (summary string, err error) {
-	source_uri := comp.Annotations[fmt.Sprintf("%s.model.source_uri", v1alpha1.MeshplayAnnotationPrefix)]
+	source_uri := comp.Annotations[fmt.Sprintf("%s.model.source_uri", v1alpha1.MesheryAnnotationPrefix)]
 	act := kubernetes.UNINSTALL
 	if isDeploy {
 		act = kubernetes.INSTALL

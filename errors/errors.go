@@ -1,4 +1,4 @@
-// Package errors provides types and function used to implement MeshKit compatible errors across the Meshplay code base.
+// Package errors provides types and function used to implement MeshKit compatible errors across the Meshery code base.
 //
 // Uniform definition of errors using these types and functions facilitates extracting error information directly from the code
 // and generating and publishing error code reference documentation automatically.
@@ -16,12 +16,12 @@
 // Additionally, the following conventions apply:
 //
 // Errors are defined in each package, in a file named error.go.
-// Errors are namespaced to Meshplay components, i.e. they need to be unique within a component.
+// Errors are namespaced to Meshery components, i.e. they need to be unique within a component.
 // (Often, a specific component corresponds to one git repository.)
 // There are no predefined error code ranges for components. Every component is free to use its own range.
 // Codes carry no meaning, as e.g. HTTP status codes do.
 //
-// See also the doc command of errorutil, and https://docs.meshplay.io/project/contributing/contributing-error.
+// See also the doc command of errorutil, and https://docs.meshery.io/project/contributing/contributing-error.
 //
 // Example:
 //

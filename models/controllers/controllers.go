@@ -1,12 +1,12 @@
 package controllers
 
-type MeshplayControllerStatus int
+type MesheryControllerStatus int
 
 const (
-	Deployed    MeshplayControllerStatus = iota //The controller is deployed(default behavior)
-	Deploying                                   //The controller is being deployed
-	NotDeployed                                 //The controller is not deployed yet
-	Undeployed                                  //The controller has been intentionally undeployed. This state is useful to avoid automatic redeployment.
+	Deployed    MesheryControllerStatus = iota //The controller is deployed(default behavior)
+	Deploying                                  //The controller is being deployed
+	NotDeployed                                //The controller is not deployed yet
+	Undeployed                                 //The controller has been intentionally undeployed. This state is useful to avoid automatic redeployment.
 	// we don't know since we have not checked yet
 	Enabled
 	Running
@@ -15,12 +15,12 @@ const (
 )
 
 const (
-	MeshSync       = "meshsync"
-	MeshplayBroker = "meshplay-broker"
-	MeshplayServer = "meshplay-server"
+	MeshSync      = "meshsync"
+	MesheryBroker = "meshery-broker"
+	MesheryServer = "meshery-server"
 )
 
-func (mcs MeshplayControllerStatus) String() string {
+func (mcs MesheryControllerStatus) String() string {
 	switch mcs {
 	case Deployed:
 		return "Deployed"
@@ -42,9 +42,9 @@ func (mcs MeshplayControllerStatus) String() string {
 	return "unknown"
 }
 
-type IMeshplayController interface {
+type IMesheryController interface {
 	GetName() string
-	GetStatus() MeshplayControllerStatus
+	GetStatus() MesheryControllerStatus
 	Deploy(force bool) error //If force is set to false && controller is in "Undeployed", then Deployment will be skipped. Set force=true for explicit install.
 	Undeploy() error
 	GetPublicEndpoint() (string, error)

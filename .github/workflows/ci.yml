@@ -50,7 +50,7 @@ jobs:
       - name: test
         run: make test
       - name: Upload covergae to Codecov
-        if: github.repository == 'meshplay/meshkit'
+        if: github.repository == 'meshery/meshkit'
         uses: codecov/codecov-action@v3
         with:
           files: ./coverage.out

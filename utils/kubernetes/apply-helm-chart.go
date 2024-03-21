@@ -227,11 +227,11 @@ type ApplyHelmChartConfig struct {
 //	}
 //	vals, err := valueOpts.MergeValues(p)
 //
-//	err = kubeClient.ApplyHelmChart(meshplaykube.ApplyHelmChartConfig{
+//	err = kubeClient.ApplyHelmChart(mesherykube.ApplyHelmChartConfig{
 //		Namespace:       request.Namespace,
 //		CreateNamespace: true,
 //		Delete:          request.IsDeleteOperation,
-//		ChartLocation: meshplaykube.HelmChartLocation{
+//		ChartLocation: mesherykube.HelmChartLocation{
 //			Repository: operation.AdditionalProperties[config.HelmChartRepositoryKey],
 //			Chart:      operation.AdditionalProperties[config.HelmChartChartKey],
 //			Version:    operation.AdditionalProperties[config.HelmChartVersionKey],
@@ -373,7 +373,7 @@ func getHelmChartURL(cfg ApplyHelmChartConfig) (string, error) {
 func fetchHelmChart(chartURL, downloadPath string) (string, error) {
 	filename := filepath.Base(chartURL)
 
-	// This allows the caller of the function to use the perfered location to download the helm chart, e.g. "~/.meshplay/manifests"
+	// This allows the caller of the function to use the perfered location to download the helm chart, e.g. "~/.meshery/manifests"
 	if downloadPath == "" {
 		downloadPath = filepath.Join(downloadLocation, filename)
 	} else {

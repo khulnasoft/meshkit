@@ -60,7 +60,7 @@ func (g *GoMod) SyncRequire(f io.Reader, throwerr bool) (gomod string, err error
 		for i, d := range data {
 			if !strings.Contains(d, "=>") && strings.Contains(d, required.Name+" ") && !strings.Contains(d, required.Version) {
 				if throwerr {
-					return "", fmt.Errorf("version mismatch for %s. Meshplay has: %s but extension has %s", required.Name, required.Version, d)
+					return "", fmt.Errorf("version mismatch for %s. Meshery has: %s but extension has %s", required.Name, required.Version, d)
 				}
 				indirect := strings.Contains(d, "//indirect")
 				updateVersion := "\t" + required.Name + " " + required.Version

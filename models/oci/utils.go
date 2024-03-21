@@ -15,7 +15,7 @@ import (
 
 func CreateTempOCIContentDir() (tempDir string, err error) {
 	wd := utils.GetHome()
-	wd = filepath.Join(wd, ".meshplay", "content")
+	wd = filepath.Join(wd, ".meshery", "content")
 	tempDir, err = os.MkdirTemp(wd, "oci")
 	if err != nil {
 		return "", err

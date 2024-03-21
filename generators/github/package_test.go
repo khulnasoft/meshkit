@@ -49,7 +49,7 @@ func TestGenerateCompFromGitHub(t *testing.T) {
 		// { // Source pointing to a directory containing helm chart
 		// 	ghPackageManager: GitHubPackageManager{
 		// 		PackageName: "acm-controller",
-		// 		SourceURL:   "https://meshplay.github.io/meshplay.io/charts/meshplay-v0.7.12.tgz/v0.7.12",
+		// 		SourceURL:   "https://meshery.github.io/meshery.io/charts/meshery-v0.7.12.tgz/v0.7.12",
 		// 	},
 		// 	want: 2,
 		// },
@@ -70,7 +70,7 @@ func TestGenerateCompFromGitHub(t *testing.T) {
 		// { // Source pointing to a dir containing CRDs
 		// 	ghPackageManager: GitHubPackageManager{
 		// 		PackageName: "acm-controller",
-		// 		SourceURL:   "git://github.com/khulnasoft/meshplay/master/install/kubernetes/helm/meshplay-operator",
+		// 		SourceURL:   "git://github.com/meshery/meshery/master/install/kubernetes/helm/meshery-operator",
 		// 	},
 		// 	want: 2,
 		// },

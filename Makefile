@@ -14,14 +14,14 @@ tidy:
 	go mod tidy
 	git diff --exit-code go.mod go.sum
 
-## Run Meshplay Error Code Utility. Generate error codes.
+## Run Meshery Error Code Utility. Generate error codes.
 errorutil:
-	go run github.com/khulnasoft/meshkit/cmd/errorutil -d . update --skip-dirs meshplay -i ./helpers -o ./helpers
+	go run github.com/khulnasoft/meshkit/cmd/errorutil -d . update --skip-dirs meshery -i ./helpers -o ./helpers
 
-## Run Meshplay Error Code Utility. Analyze only.
+## Run Meshery Error Code Utility. Analyze only.
 errorutil-analyze:
-	go run github.com/khulnasoft/meshkit/cmd/errorutil -d . analyze --skip-dirs meshplay -i ./helpers -o ./helpers
+	go run github.com/khulnasoft/meshkit/cmd/errorutil -d . analyze --skip-dirs meshery -i ./helpers -o ./helpers
 
-## Build the Meshplay Error Code Utility. 
+## Build the Meshery Error Code Utility. 
 build-errorutil:
 	go build -o errorutil cmd/errorutil/main.go

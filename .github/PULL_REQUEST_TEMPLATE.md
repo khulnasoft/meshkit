@@ -10,7 +10,7 @@ This PR fixes #
  
 
 <!--
-Thank you for contributing to Meshplay! 
+Thank you for contributing to Meshery! 
 
 Contributing Conventions:
 

@@ -3,8 +3,8 @@ package controllers
 import (
 	"context"
 
-	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
-	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
+	opClient "github.com/layer5io/meshery-operator/pkg/client"
+	mesherykube "github.com/khulnasoft/meshkit/utils/kubernetes"
 	v1 "k8s.io/api/core/v1"
 	kubeerror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -14,11 +14,11 @@ import (
 
 type meshsync struct {
 	name    string
-	status  MeshplayControllerStatus
-	kclient *meshplaykube.Client
+	status  MesheryControllerStatus
+	kclient *mesherykube.Client
 }
 
-func NewMeshsyncHandler(kubernetesClient *meshplaykube.Client) IMeshplayController {
+func NewMeshsyncHandler(kubernetesClient *mesherykube.Client) IMesheryController {
 	return &meshsync{
 		name:    "MeshSync",
 		status:  Unknown,
@@ -30,25 +30,25 @@ func (ms *meshsync) GetName() string {
 	return ms.name
 }
 
-func (ms *meshsync) GetStatus() MeshplayControllerStatus {
+func (ms *meshsync) GetStatus() MesheryControllerStatus {
 	operatorClient, _ := opClient.New(&ms.kclient.RestConfig)
 	// TODO: Confirm if the presence of operator is needed to use the operator client sdk
-	_, err := operatorClient.CoreV1Alpha1().MeshSyncs("meshplay").Get(context.TODO(), "meshplay-meshsync", metav1.GetOptions{})
+	_, err := operatorClient.CoreV1Alpha1().MeshSyncs("meshery").Get(context.TODO(), "meshery-meshsync", metav1.GetOptions{})
 
 	if err == nil {
 		ms.status = Enabled
-		meshSyncPod, errMeshplay := ms.kclient.KubeClient.CoreV1().Pods("meshplay").List(context.TODO(), metav1.ListOptions{
+		meshSyncPod, errMeshery := ms.kclient.KubeClient.CoreV1().Pods("meshery").List(context.TODO(), metav1.ListOptions{
 			LabelSelector: "component=meshsync",
 		})
 
-		if len(meshSyncPod.Items) == 0 || kubeerror.IsNotFound(errMeshplay) {
+		if len(meshSyncPod.Items) == 0 || kubeerror.IsNotFound(errMeshery) {
 			return ms.status
 		}
 		for _, pod := range meshSyncPod.Items {
 			switch pod.Status.Phase {
 			case v1.PodRunning:
 				ms.status = Running
-				broker := NewMeshplayBrokerHandler(ms.kclient)
+				broker := NewMesheryBrokerHandler(ms.kclient)
 				var brokerEndpoint string
 				brokerEndpoint, err = broker.GetEndpointForPort(brokerMonitoringPortName)
 				if err != nil {
@@ -71,7 +71,7 @@ func (ms *meshsync) GetStatus() MeshplayControllerStatus {
 			return ms.status
 		}
 		// when we are not able to get meshSync resource from OperatorClient, we try to get it using kubernetes client
-		meshSync, err := ms.kclient.DynamicKubeClient.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "deployments"}).Namespace("meshplay").Get(context.TODO(), "meshplay-meshsync", metav1.GetOptions{})
+		meshSync, err := ms.kclient.DynamicKubeClient.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "deployments"}).Namespace("meshery").Get(context.TODO(), "meshery-meshsync", metav1.GetOptions{})
 		if err != nil {
 			// if the resource is not found, then it is NotDeployed
 			if kubeerror.IsNotFound(err) {
@@ -118,7 +118,7 @@ func (ms *meshsync) GetVersion() (string, error) {
 		return "", err
 	}
 
-	meshsyncresource, err := meshsyncclient.CoreV1Alpha1().MeshSyncs("meshplay").Get(context.TODO(), "meshplay-meshsync", metav1.GetOptions{})
+	meshsyncresource, err := meshsyncclient.CoreV1Alpha1().MeshSyncs("meshery").Get(context.TODO(), "meshery-meshsync", metav1.GetOptions{})
 
 	if err != nil {
 		return "", err

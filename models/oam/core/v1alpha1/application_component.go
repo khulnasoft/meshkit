@@ -35,14 +35,14 @@ type ComponentParameter struct {
 	Description *string  `json:"description,omitempty"`
 }
 
-const MeshplayAnnotationPrefix = "design.meshmodel.io"
+const MesheryAnnotationPrefix = "design.meshmodel.io"
 
 func GetAPIVersionFromComponent(comp Component) string {
-	return comp.Annotations[MeshplayAnnotationPrefix+".k8s.APIVersion"]
+	return comp.Annotations[MesheryAnnotationPrefix+".k8s.APIVersion"]
 }
 
 func GetKindFromComponent(comp Component) string {
-	kind := strings.TrimPrefix(comp.Annotations[MeshplayAnnotationPrefix+".k8s.Kind"], "/")
+	kind := strings.TrimPrefix(comp.Annotations[MesheryAnnotationPrefix+".k8s.Kind"], "/")
 	return kind
 }
 
@@ -51,17 +51,17 @@ func GetAnnotationsForWorkload(w v1alpha1.ComponentDefinition) map[string]string
 
 	for key, val := range w.Metadata {
 		if v, ok := val.(string); ok {
-			res[strings.ReplaceAll(fmt.Sprintf("%s.%s", MeshplayAnnotationPrefix, key), " ", "")] = v
+			res[strings.ReplaceAll(fmt.Sprintf("%s.%s", MesheryAnnotationPrefix, key), " ", "")] = v
 		}
 	}
 	sourceURI, ok := w.Model.Metadata["source_uri"].(string)
 	if ok {
-		res[fmt.Sprintf("%s.model.source_uri", MeshplayAnnotationPrefix)] = sourceURI
+		res[fmt.Sprintf("%s.model.source_uri", MesheryAnnotationPrefix)] = sourceURI
 	}
-	res[fmt.Sprintf("%s.model.name", MeshplayAnnotationPrefix)] = w.Model.Name
-	res[fmt.Sprintf("%s.k8s.APIVersion", MeshplayAnnotationPrefix)] = w.APIVersion
-	res[fmt.Sprintf("%s.k8s.Kind", MeshplayAnnotationPrefix)] = w.Kind
-	res[fmt.Sprintf("%s.model.version", MeshplayAnnotationPrefix)] = w.Model.Version
-	res[fmt.Sprintf("%s.model.category", MeshplayAnnotationPrefix)] = w.Model.Category.Name
+	res[fmt.Sprintf("%s.model.name", MesheryAnnotationPrefix)] = w.Model.Name
+	res[fmt.Sprintf("%s.k8s.APIVersion", MesheryAnnotationPrefix)] = w.APIVersion
+	res[fmt.Sprintf("%s.k8s.Kind", MesheryAnnotationPrefix)] = w.Kind
+	res[fmt.Sprintf("%s.model.version", MesheryAnnotationPrefix)] = w.Model.Version
+	res[fmt.Sprintf("%s.model.category", MesheryAnnotationPrefix)] = w.Model.Category.Name
 	return res
 }

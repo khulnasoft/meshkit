@@ -53,12 +53,12 @@ func ErrApplyHelmChart(err error) error {
 
 // ErrApplyHelmChart is the error which occurs in the process of applying helm chart
 func ErrNewKubeClient(err error) error {
-	return errors.New(ErrNewKubeClientCode, errors.Alert, []string{"Error creating kubernetes clientset"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshplay or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
+	return errors.New(ErrNewKubeClientCode, errors.Alert, []string{"Error creating kubernetes clientset"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshery or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
 }
 
 // ErrApplyHelmChart is the error which occurs in the process of applying helm chart
 func ErrNewDynClient(err error) error {
-	return errors.New(ErrNewDynClientCode, errors.Alert, []string{"Error creating dynamic client"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshplay or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
+	return errors.New(ErrNewDynClientCode, errors.Alert, []string{"Error creating dynamic client"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshery or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
 }
 
 // ErrApplyHelmChart is the error which occurs in the process of applying helm chart
@@ -73,12 +73,12 @@ func ErrNewInformer(err error) error {
 
 // ErrLoadConfig is the error which occurs in the process of loading a kubernetes config
 func ErrLoadConfig(err error) error {
-	return errors.New(ErrLoadConfigCode, errors.Alert, []string{"Error loading kubernetes config"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshplay or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
+	return errors.New(ErrLoadConfigCode, errors.Alert, []string{"Error loading kubernetes config"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshery or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
 }
 
 // ErrValidateConfig is the error which occurs in the process of validating a kubernetes config
 func ErrValidateConfig(err error) error {
-	return errors.New(ErrValidateConfigCode, errors.Alert, []string{"Validation failed in the kubernetes config"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshplay or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
+	return errors.New(ErrValidateConfigCode, errors.Alert, []string{"Validation failed in the kubernetes config"}, []string{err.Error()}, []string{"Kubernetes config is not accessible to meshery or not valid"}, []string{"Upload your kubernetes config via the settings dashboard. If uploaded, wait for a minute for it to get initialized"})
 }
 
 // ErrCreatingHelmIndex is the error for creating helm index
