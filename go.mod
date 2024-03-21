@@ -8,7 +8,7 @@ replace (
 	github.com/docker/libcompose => github.com/docker/libcompose v0.4.1-0.20190808084053-143e0f3f1ab9
 	github.com/googleapis/gnostic => github.com/googleapis/gnostic v0.5.5
 	github.com/jaguilar/vt100 => github.com/tonistiigi/vt100 v0.0.0-20190402012908-ad4c4a574305
-	github.com/kubernetes/kompose => github.com/khulnasoft/kompose v1.0.2
+	github.com/kubernetes/kompose => github.com/khulnasoft/kompose v1.0.1
 	oras.land/oras-go v1.2.4 => oras.land/oras-go v1.2.3
 )
 
@@ -22,7 +22,7 @@ require (
 	github.com/google/go-containerregistry v0.17.0
 	github.com/google/uuid v1.4.0
 	github.com/khulnasoft/meshplay-operator v0.0.0-20240320182914-d025e6594e3e
-	github.com/kubernetes/kompose v1.31.1
+	github.com/kubernetes/kompose v0.0.0-00010101000000-000000000000
 	github.com/nats-io/nats.go v1.31.0
 	github.com/open-policy-agent/opa v0.57.1
 	github.com/pkg/errors v0.9.1
