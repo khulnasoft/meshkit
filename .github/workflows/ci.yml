@@ -2,10 +2,10 @@ name: Lint and unit tests
 on:
   push:
     branches:
-      - master
+      - develop
   pull_request:
     branches:
-      - master
+      - develop
 jobs:
   golangci:
     name: lint
@@ -50,7 +50,7 @@ jobs:
       - name: test
         run: make test
       - name: Upload covergae to Codecov
-        if: github.repository == 'meshplay/meshkit'
+        if: github.repository == 'meshery/meshkit'
         uses: codecov/codecov-action@v3
         with:
           files: ./coverage.out

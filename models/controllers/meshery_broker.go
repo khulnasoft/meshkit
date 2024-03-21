@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"strings"
 
-	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
-	opClient "github.com/khulnasoft/meshplay-operator/pkg/client"
+	opClient "github.com/layer5io/meshery-operator/pkg/client"
+	mesherykube "github.com/khulnasoft/meshkit/utils/kubernetes"
 	v1 "k8s.io/api/core/v1"
 	kubeerror "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -18,36 +18,36 @@ var (
 	brokerMonitoringPortName = "monitor"
 )
 
-type meshplayBroker struct {
+type mesheryBroker struct {
 	name    string
-	status  MeshplayControllerStatus
-	kclient *meshplaykube.Client
+	status  MesheryControllerStatus
+	kclient *mesherykube.Client
 }
 
-func NewMeshplayBrokerHandler(kubernetesClient *meshplaykube.Client) IMeshplayController {
-	return &meshplayBroker{
-		name:    "MeshplayBroker",
+func NewMesheryBrokerHandler(kubernetesClient *mesherykube.Client) IMesheryController {
+	return &mesheryBroker{
+		name:    "MesheryBroker",
 		status:  Unknown,
 		kclient: kubernetesClient,
 	}
 }
 
-func (mb *meshplayBroker) GetName() string {
+func (mb *mesheryBroker) GetName() string {
 	return mb.name
 }
 
-func (mb *meshplayBroker) GetStatus() MeshplayControllerStatus {
+func (mb *mesheryBroker) GetStatus() MesheryControllerStatus {
 	operatorClient, err := opClient.New(&mb.kclient.RestConfig)
 	if err != nil || operatorClient == nil {
 		return Unknown
 	}
 	// TODO: Confirm if the presence of operator is needed to use the operator client sdk
-	_, err = operatorClient.CoreV1Alpha1().Brokers("meshplay").Get(context.TODO(), "meshplay-broker", metav1.GetOptions{})
+	_, err = operatorClient.CoreV1Alpha1().Brokers("meshery").Get(context.TODO(), "meshery-broker", metav1.GetOptions{})
 	if err == nil {
 		var monitoringEndpoint string
 		monitoringEndpoint, err = mb.GetEndpointForPort(brokerMonitoringPortName)
 		if err == nil {
-			if ConnectivityTest(MeshplayServer, monitoringEndpoint) {
+			if ConnectivityTest(MesheryServer, monitoringEndpoint) {
 				mb.status = Connected
 				return mb.status
 			}
@@ -62,7 +62,7 @@ func (mb *meshplayBroker) GetStatus() MeshplayControllerStatus {
 			return mb.status
 		}
 		// when operatorClient is not able to get meshesry-broker, we try again with kubernetes client as a fallback
-		broker, err := mb.kclient.DynamicKubeClient.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "statefulsets"}).Namespace("meshplay").Get(context.TODO(), MeshplayBroker, metav1.GetOptions{})
+		broker, err := mb.kclient.DynamicKubeClient.Resource(schema.GroupVersionResource{Group: "apps", Version: "v1", Resource: "statefulsets"}).Namespace("meshery").Get(context.TODO(), MesheryBroker, metav1.GetOptions{})
 		if err != nil {
 			// if the resource is not found, then it is NotDeployed
 			if kubeerror.IsNotFound(err) {
@@ -89,24 +89,24 @@ func (mb *meshplayBroker) GetStatus() MeshplayControllerStatus {
 	}
 }
 
-func (mb *meshplayBroker) Deploy(force bool) error {
+func (mb *mesheryBroker) Deploy(force bool) error {
 	// deploying the operator will deploy broker. Right now, we don't need to implement this functionality. But we may implement in the future
 	return nil
 }
-func (mb *meshplayBroker) Undeploy() error {
+func (mb *mesheryBroker) Undeploy() error {
 	// currently we do not allow the manual undeployment of broker
 	return nil
 }
 
-func (mb *meshplayBroker) GetPublicEndpoint() (string, error) {
+func (mb *mesheryBroker) GetPublicEndpoint() (string, error) {
 	operatorClient, err := opClient.New(&mb.kclient.RestConfig)
 	if err != nil {
 		return "", ErrGetControllerPublicEndpoint(err)
 	}
-	broker, err := operatorClient.CoreV1Alpha1().Brokers("meshplay").Get(context.TODO(), MeshplayBroker, metav1.GetOptions{})
+	broker, err := operatorClient.CoreV1Alpha1().Brokers("meshery").Get(context.TODO(), MesheryBroker, metav1.GetOptions{})
 	if broker.Status.Endpoint.External == "" {
 		if err == nil {
-			err = fmt.Errorf("Could not get the External endpoint for meshplay-broker")
+			err = fmt.Errorf("Could not get the External endpoint for meshery-broker")
 		}
 		// broker is not available
 		return "", ErrGetControllerPublicEndpoint(err)
@@ -115,18 +115,18 @@ func (mb *meshplayBroker) GetPublicEndpoint() (string, error) {
 	return GetBrokerEndpoint(mb.kclient, broker), nil
 }
 
-func (mb *meshplayBroker) GetVersion() (string, error) {
-	statefulSet, err := mb.kclient.KubeClient.AppsV1().StatefulSets("meshplay").Get(context.TODO(), MeshplayBroker, metav1.GetOptions{})
+func (mb *mesheryBroker) GetVersion() (string, error) {
+	statefulSet, err := mb.kclient.KubeClient.AppsV1().StatefulSets("meshery").Get(context.TODO(), MesheryBroker, metav1.GetOptions{})
 	if kubeerror.IsNotFound(err) {
 		return "", err
 	}
 	return getImageVersionOfContainer(statefulSet.Spec.Template, "nats"), nil
 }
 
-func (mb *meshplayBroker) GetEndpointForPort(portName string) (string, error) {
-	endpoint, err := meshplaykube.GetServiceEndpoint(context.TODO(), mb.kclient.KubeClient, &meshplaykube.ServiceOptions{
-		Name:         "meshplay-broker",
-		Namespace:    "meshplay",
+func (mb *mesheryBroker) GetEndpointForPort(portName string) (string, error) {
+	endpoint, err := mesherykube.GetServiceEndpoint(context.TODO(), mb.kclient.KubeClient, &mesherykube.ServiceOptions{
+		Name:         "meshery-broker",
+		Namespace:    "meshery",
 		PortSelector: portName,
 	})
 	if err != nil {

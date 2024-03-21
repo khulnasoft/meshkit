@@ -25,7 +25,7 @@ jobs:
 
       - name: Run utility
         run: |
-          go run github.com/khulnasoft/meshkit/cmd/errorutil -d . update --skip-dirs meshplay -i ./helpers -o ./helpers
+          go run github.com/khulnasoft/meshkit/cmd/errorutil -d . update --skip-dirs meshery -i ./helpers -o ./helpers
 
       # to update errorutil* files in meshkit repo
       - name: Commit changes
@@ -38,21 +38,21 @@ jobs:
           commit_message: "run error codes utility"
           file_pattern: helpers/ **.go
 
-      # to push changes to meshplay docs
-      - name: Checkout meshplay
+      # to push changes to meshery docs
+      - name: Checkout meshery
         uses: actions/checkout@master
         with:
-          repository: 'khulnasoft/meshplay'
-          # token with write access to meshplay repository
+          repository: 'meshery/meshery'
+          # token with write access to meshery repository
           token: ${{ secrets.ORG_REPO_TOKEN }}
-          path: 'meshplay'
+          path: 'meshery'
           ref: 'master'
 
       - name: Update and push docs
         run: |
-          echo '{ "errors_export": "" }' | jq --slurpfile export ./helpers/errorutil_errors_export.json '.errors_export = $export[0]' > ./meshplay/docs/_data/errorref/meshkit_errors_export.json
+          echo '{ "errors_export": "" }' | jq --slurpfile export ./helpers/errorutil_errors_export.json '.errors_export = $export[0]' > ./meshery/docs/_data/errorref/meshkit_errors_export.json
 
-          cd ./meshplay
+          cd ./meshery
           git config user.name l5io
           git config user.email ci@khulnasoft.com
           if git diff --exit-code --quiet

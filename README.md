@@ -1,41 +1,41 @@
-# MeshKit for Meshplay and it's ecosystem
-A toolkit for Meshplay's microservices and various individual architectural components to reuse and share common functionality. Learn more: [Introducing MeshKit and the Meshplay Adapter Library](https://khulnasoft.com/blog/meshplay/introducing-meshkit-and-the-meshplay-adapter-library)
+# MeshKit for Meshery and it's ecosystem
+A toolkit for Meshery's microservices and various individual architectural components to reuse and share common functionality. Learn more: [Introducing MeshKit and the Meshery Adapter Library](https://khulnasoft.com/blog/meshery/introducing-meshkit-and-the-meshery-adapter-library)
 
-[![](https://github.com/khulnasoft/meshkit/actions/workflows/ci.yml/badge.svg)](https://github.com/khulnasoft/meshkit/actions/workflows/ci.yml)
-[![](https://github.com/khulnasoft/meshkit/actions/workflows/release-drafter.yml/badge.svg)](https://github.com/khulnasoft/meshkit/actions/workflows/release-drafter.yml)
-[![](https://github.com/khulnasoft/meshkit/actions/workflows/error-codes-updater.yaml/badge.svg)](https://github.com/khulnasoft/meshkit/actions/workflows/error-codes-updater.yaml)
+[![](https://github.com/meshery/meshkit/actions/workflows/ci.yml/badge.svg)](https://github.com/meshery/meshkit/actions/workflows/ci.yml)
+[![](https://github.com/meshery/meshkit/actions/workflows/release-drafter.yml/badge.svg)](https://github.com/meshery/meshkit/actions/workflows/release-drafter.yml)
+[![](https://github.com/meshery/meshkit/actions/workflows/error-codes-updater.yaml/badge.svg)](https://github.com/meshery/meshkit/actions/workflows/error-codes-updater.yaml)
 
 <div>&nbsp;</div>
 
 ## Join the community!
 
 <a name="contributing"></a><a name="community"></a>
-Our projects are community-built and welcome collaboration. 👍 Be sure to see the <a href="https://khulnasoft.com/community/newcomers">KhulnaSoft Community Welcome Guide</a> for a tour of resources available to you and jump into our <a href="http://slack.khulnasoft.com">Slack</a>!
+Our projects are community-built and welcome collaboration. 👍 Be sure to see the <a href="https://khulnasoft.com/community/newcomers">Layer5 Community Welcome Guide</a> for a tour of resources available to you and jump into our <a href="http://slack.khulnasoft.com">Slack</a>!
 
 <p style="clear:both;">
-<a href ="https://khulnasoft.com/community/meshmates"><img alt="MeshMates" src=".github/readme/images/KhulnaSoft-MeshMentors.png" style="margin-right:10px; margin-bottom:7px;" width="28%" align="left" /></a>
+<a href ="https://khulnasoft.com/community/meshmates"><img alt="MeshMates" src=".github/readme/images/Layer5-MeshMentors.png" style="margin-right:10px; margin-bottom:7px;" width="28%" align="left" /></a>
 <h3>Find your MeshMate</h3>
 
-<p>MeshMates are experienced KhulnaSoft community members, who will help you learn your way around, discover live projects and expand your community network. 
+<p>MeshMates are experienced Layer5 community members, who will help you learn your way around, discover live projects and expand your community network. 
 Become a <b>Meshtee</b> today!</p>
 
-Find out more on the <a href="https://khulnasoft.com/community">KhulnaSoft community</a>. <br />
+Find out more on the <a href="https://khulnasoft.com/community">Layer5 community</a>. <br />
 <br /><br /><br /><br />
 </p>
 
 <div>&nbsp;</div>
 
 
-<a href="https://slack.meshplay.io">
+<a href="https://slack.meshery.io">
 
 <picture align="right">
   <source media="(prefers-color-scheme: dark)" srcset=".github/readme/images//slack-dark-128.png"  width="110px" align="right" style="margin-left:10px;margin-top:10px;">
   <source media="(prefers-color-scheme: light)" srcset=".github/readme/images//slack-128.png" width="110px" align="right" style="margin-left:10px;padding-top:5px;">
-  <img alt="Shows an illustrated light mode meshplay logo in light color mode and a dark mode meshplay logo dark color mode." src=".github/readme/images//slack-128.png" width="110px" align="right" style="margin-left:10px;padding-top:13px;">
+  <img alt="Shows an illustrated light mode meshery logo in light color mode and a dark mode meshery logo dark color mode." src=".github/readme/images//slack-128.png" width="110px" align="right" style="margin-left:10px;padding-top:13px;">
 </picture>
 </a>
 
-<a href="https://meshplay.io/community"><img alt="KhulnaSoft Cloud Native Community" src=".github/readme/images//community.svg" style="margin-right:8px;padding-top:5px;" width="140px" align="left" /></a>
+<a href="https://meshery.io/community"><img alt="Layer5 Cloud Native Community" src=".github/readme/images//community.svg" style="margin-right:8px;padding-top:5px;" width="140px" align="left" /></a>
 
 <p>
 ✔️ <em><strong>Join</strong></em> any or all of the weekly meetings on <a href="https://calendar.google.com/calendar/b/1?cid=bGF5ZXI1LmlvX2VoMmFhOWRwZjFnNDBlbHZvYzc2MmpucGhzQGdyb3VwLmNhbGVuZGFyLmdvb2dsZS5jb20">community calendar</a>.<br />
@@ -44,5 +44,5 @@ Find out more on the <a href="https://khulnasoft.com/community">KhulnaSoft commu
 ✔️ <em><strong>Discuss</strong></em> in the <a href="https://discuss.khulnasoft.com">Community Forum</a>.<br />
 </p>
 <p align="center">
-<i>Not sure where to start?</i> Grab an open issue with the <a href="https://github.com/khulnasoft/KhulnaSoft/labels/help%20wanted">help-wanted label</a>.
+<i>Not sure where to start?</i> Grab an open issue with the <a href="https://github.com/khulnasoft/khulnasoft/labels/help%20wanted">help-wanted label</a>.
 </p>

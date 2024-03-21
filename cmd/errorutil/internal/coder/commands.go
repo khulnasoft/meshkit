@@ -145,7 +145,7 @@ func commandDoc() *cobra.Command {
 		Long:  "Print the documentation",
 		Run: func(cmd *cobra.Command, args []string) {
 			println(`
-This tool analyzes, verifies and updates MeshKit compatible errors in Meshplay Go source code trees.
+This tool analyzes, verifies and updates MeshKit compatible errors in Meshery Go source code trees.
 
 A MeshKit compatible error consist of
 - An error code defined as a constant or variable (preferably constant), of type string.
@@ -171,14 +171,14 @@ Additionally, the following conventions apply:
 This tool produces three files:
 - errorutil_analyze_errors.json: raw data with all errors and some metadata
 - errorutil_analyze_summary.json: summary of raw data, also used for validation and troubleshooting
-- errorutil_errors_export.json: export of errors which can be used to create the error code reference on the Meshplay website
+- errorutil_errors_export.json: export of errors which can be used to create the error code reference on the Meshery website
 
 Typically, the 'analyze' command of the tool is used by the developer to verify errors, i.e. that there are no duplicate names or details.
 A CI workflow is used to replace the placeholder code strings with integer code, and export errors. Using this export, the workflow updates 
-the error code reference documentation in the Meshplay repository.
+the error code reference documentation in the Meshery repository.
 
-Meshplay components and this tool:
-- Meshplay components have a name and a type.
+Meshery components and this tool:
+- Meshery components have a name and a type.
 - An example of a component is MeshKit with 'meshkit' as name, and 'library' as type.
 - Often, a specific component corresponds to one git repository.
 - The tool requires a file called component_info.json.

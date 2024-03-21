@@ -18,7 +18,7 @@ type BroadcastSource string
 
 const (
 	// OperatorSyncChannel is a broadcast channel type for operator status messages.
-	OperatorSyncChannel BroadcastSource = "urn:meshplay:operator:sync"
+	OperatorSyncChannel BroadcastSource = "urn:meshery:operator:sync"
 )
 
 type BroadcastMessage struct {

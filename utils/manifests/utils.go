@@ -26,7 +26,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 	if err != nil {
 		return "", ErrGetResourceIdentifier(err)
 	}
-	definitionRef := strings.ToLower(resourceId) + ".meshplay.khulnasoft.com"
+	definitionRef := strings.ToLower(resourceId) + ".meshery.khulnasoft.com"
 	apiVersionCueVal, _ := cfg.CrdFilter.VersionExtractor(parsedCrd)
 	apiVersion, err := apiVersionCueVal.String()
 	if err != nil {
@@ -49,7 +49,7 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 	switch resource {
 	case SERVICE_MESH:
 		def.Spec.Metadata = map[string]string{
-			"@type":         "pattern.meshplay.io/mesh/workload",
+			"@type":         "pattern.meshery.io/mesh/workload",
 			"meshVersion":   cfg.MeshVersion,
 			"meshName":      cfg.Name,
 			"k8sAPIVersion": k8sAPIVersion,
@@ -60,19 +60,19 @@ func getDefinitions(parsedCrd cue.Value, resource int, cfg Config, ctx context.C
 			def.ObjectMeta.Name += "." + cfg.Type
 			def.Spec.DefinitionRef.Name += "." + cfg.Type
 		}
-		def.Spec.DefinitionRef.Name += ".meshplay.khulnasoft.com"
+		def.Spec.DefinitionRef.Name += ".meshery.khulnasoft.com"
 	case K8s:
 		def.Spec.Metadata = map[string]string{
-			"@type":         "pattern.meshplay.io/k8s",
+			"@type":         "pattern.meshery.io/k8s",
 			"k8sAPIVersion": k8sAPIVersion,
 			"k8sKind":       resourceId,
 			"version":       cfg.K8sVersion,
 		}
 		def.ObjectMeta.Name += ".K8s"
-		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshplay.khulnasoft.com"
-	case MESHPLAY:
+		def.Spec.DefinitionRef.Name = strings.ToLower(resourceId) + ".k8s.meshery.khulnasoft.com"
+	case MESHERY:
 		def.Spec.Metadata = map[string]string{
-			"@type": "pattern.meshplay.io/core",
+			"@type": "pattern.meshery.io/core",
 		}
 	}
 	out, err := json.MarshalIndent(def, "", " ")
@@ -108,7 +108,7 @@ func getSchema(parsedCrd cue.Value, cfg Config, ctx context.Context) (string, er
 }
 
 // removeMetadataFromCRD is used because in few cases (like linkerd), helm templating might be used there which makes the yaml invalid.
-// As those templates are useless for component creatin, we can replace them with "meshplay" to make the YAML valid
+// As those templates are useless for component creatin, we can replace them with "meshery" to make the YAML valid
 func RemoveHelmTemplatingFromCRD(crdyaml *string) {
 	y := strings.Split(*crdyaml, "\n---\n")
 	var yamlArr []string
@@ -116,7 +116,7 @@ func RemoveHelmTemplatingFromCRD(crdyaml *string) {
 		if y0 == "" {
 			continue
 		}
-		y0 = templateExpression.ReplaceAllString(y0, "meshplay")
+		y0 = templateExpression.ReplaceAllString(y0, "meshery")
 		yamlArr = append(yamlArr, string(y0))
 	}
 	*crdyaml = strings.Join(yamlArr, "\n---\n")

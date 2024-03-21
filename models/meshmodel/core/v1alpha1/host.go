@@ -14,7 +14,7 @@ type EntitySummary struct {
 	Relationships int64 `json:"relationships"`
 	Policies      int64 `json:"policies"`
 }
-type MeshplayHostSummaryDB struct {
+type MesheryHostSummaryDB struct {
 	HostID        uuid.UUID `json:"-" gorm:"id"`
 	Hostname      string    `json:"-" gorm:"hostname"`
 	Port          int       `json:"-" gorm:"port"`

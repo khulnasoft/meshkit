@@ -6,13 +6,13 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/khulnasoft/meshkit/utils"
 	"github.com/kubernetes/kompose/pkg/app"
 	"github.com/kubernetes/kompose/pkg/kobject"
 	"github.com/kubernetes/kompose/pkg/loader"
 	"github.com/kubernetes/kompose/pkg/transformer"
 	"github.com/kubernetes/kompose/pkg/transformer/kubernetes"
 	"github.com/kubernetes/kompose/pkg/transformer/openshift"
+	"github.com/khulnasoft/meshkit/utils"
 	"gopkg.in/yaml.v2"
 )
 

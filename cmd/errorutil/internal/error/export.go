@@ -15,12 +15,12 @@ import (
 
 // Error is used to export Error for e.g. documentation purposes.
 //
-// Type Error (errors/types.go) is not reused in order to avoid tight coupling between code and documentation of errors, e.g. on Meshplay website.
+// Type Error (errors/types.go) is not reused in order to avoid tight coupling between code and documentation of errors, e.g. on Meshery website.
 // It is good practice not to use internal data types in integrations; one should in general transform between internal and external models.
 // DDD calls this anti-corruption layer.
 // One reason is that one might like to have a different representation externally, e.g. severity 'info' instead of '1'.
 // Another one is that it is often desirable to be able to change the internal representation without the need for the consumer
-// (in this case, the meshplay doc) to have to adjust quickly in order to be able to handle updated content.
+// (in this case, the meshery doc) to have to adjust quickly in order to be able to handle updated content.
 // The lifecycles of producers and consumers should not be tightly coupled.
 type Error struct {
 	Name                 string `yaml:"name" json:"name"`                                   // the name of the error code variable, e.g. "ErrInstallMesh", not guaranteed to be unique as it is package scoped

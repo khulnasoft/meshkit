@@ -8,7 +8,7 @@ type Validator interface {
 }
 
 // An entity that is used to expose a particular
-// system's capabilities in Meshplay
+// system's capabilities in Meshery
 // A Package should have all the information that we need to generate the components
 type Package interface {
 	GenerateComponents() ([]v1alpha1.ComponentDefinition, error)
@@ -16,7 +16,7 @@ type Package interface {
 }
 
 // Supports pulling packages from Artifact Hub and other sources like Docker Hub.
-// Should envelope Meshplay Application importer - to be implemented
+// Should envelope Meshery Application importer - to be implemented
 type PackageManager interface {
 	GetPackage() (Package, error)
 }

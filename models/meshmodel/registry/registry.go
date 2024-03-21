@@ -17,7 +17,7 @@ import (
 )
 
 // MeshModelRegistrantData struct defines the body of the POST request that is sent to the capability
-// registry (Meshplay)
+// registry (Meshery)
 //
 // The body contains the
 // 1. Host information
@@ -224,7 +224,7 @@ func (rm *RegistryManager) UpdateEntityStatus(ID string, status string, entity s
 }
 
 func (rm *RegistryManager) GetRegistrants(f *v1alpha1.HostFilter) ([]v1alpha1.MeshModelHostsWithEntitySummary, int64, error) {
-	var result []v1alpha1.MeshplayHostSummaryDB
+	var result []v1alpha1.MesheryHostSummaryDB
 	var totalcount int64
 	db := rm.db
 

@@ -13,7 +13,7 @@ assignees: ''
 
 ---
 **Contributor Resources**
-- [Meshplay documentation site](https://meshplay.khulnasoft.com/docs/)
-- [Meshplay documentation source](https://github.com/khulnasoft/meshplay/tree/master/docs)
-- [Instructions for contributing to documentation](https://github.com/khulnasoft/meshplay/blob/master/CONTRIBUTING.md#documentation-contribution-flow)
+- [Meshery documentation site](https://meshery.khulnasoft.com/docs/)
+- [Meshery documentation source](https://github.com/khulnasoft/meshery/tree/master/docs)
+- [Instructions for contributing to documentation](https://github.com/khulnasoft/meshery/blob/master/CONTRIBUTING.md#documentation-contribution-flow)
 

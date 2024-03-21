@@ -10,9 +10,9 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/layer5io/meshery-operator/api/v1alpha1"
 	"github.com/khulnasoft/meshkit/utils"
-	meshplaykube "github.com/khulnasoft/meshkit/utils/kubernetes"
-	"github.com/khulnasoft/meshplay-operator/api/v1alpha1"
+	mesherykube "github.com/khulnasoft/meshkit/utils/kubernetes"
 )
 
 const BrokerPingEndpoint = "/connz"
@@ -25,7 +25,7 @@ type connection struct {
 	Name string `json:"name"`
 }
 
-func GetBrokerEndpoint(kclient *meshplaykube.Client, broker *v1alpha1.Broker) string {
+func GetBrokerEndpoint(kclient *mesherykube.Client, broker *v1alpha1.Broker) string {
 	endpoint := broker.Status.Endpoint.Internal
 	if len(strings.Split(broker.Status.Endpoint.Internal, ":")) > 1 {
 		port, _ := strconv.Atoi(strings.Split(broker.Status.Endpoint.Internal, ":")[1])
@@ -60,21 +60,21 @@ func GetBrokerEndpoint(kclient *meshplaykube.Client, broker *v1alpha1.Broker) st
 	return endpoint
 }
 
-func applyOperatorHelmChart(chartRepo string, client meshplaykube.Client, meshplayReleaseVersion string, delete bool, overrides map[string]interface{}) error {
+func applyOperatorHelmChart(chartRepo string, client mesherykube.Client, mesheryReleaseVersion string, delete bool, overrides map[string]interface{}) error {
 	var (
-		act   = meshplaykube.INSTALL
-		chart = "meshplay-operator"
+		act   = mesherykube.INSTALL
+		chart = "meshery-operator"
 	)
 	if delete {
-		act = meshplaykube.UNINSTALL
+		act = mesherykube.UNINSTALL
 	}
-	err := client.ApplyHelmChart(meshplaykube.ApplyHelmChartConfig{
-		Namespace:   "meshplay",
-		ReleaseName: "meshplay-operator",
-		ChartLocation: meshplaykube.HelmChartLocation{
+	err := client.ApplyHelmChart(mesherykube.ApplyHelmChartConfig{
+		Namespace:   "meshery",
+		ReleaseName: "meshery-operator",
+		ChartLocation: mesherykube.HelmChartLocation{
 			Repository: chartRepo,
 			Chart:      chart,
-			Version:    meshplayReleaseVersion,
+			Version:    mesheryReleaseVersion,
 		},
 		// CreateNamespace doesn't have any effect when the action is UNINSTALL
 		CreateNamespace: true,
