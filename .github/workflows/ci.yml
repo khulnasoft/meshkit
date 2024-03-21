@@ -2,10 +2,10 @@ name: Lint and unit tests
 on:
   push:
     branches:
-      - master
+      - develop
   pull_request:
     branches:
-      - master
+      - develop
 jobs:
   golangci:
     name: lint
